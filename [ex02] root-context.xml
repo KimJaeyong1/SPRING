@@ -38,9 +38,7 @@
 	<!-- mybatis - mapper 설정 -->
 	<mybatis-spring:scan base-package="org.zerock.mapper"/>
 	
-	<!-- 내가 추가한거 -->
-	<!-- 
-	 -->
+	
 	<!-- 서비스 스캔 -->
 	<context:component-scan base-package="org.zerock.service">
 	</context:component-scan>
