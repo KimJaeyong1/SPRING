@@ -23,8 +23,9 @@
 		<property name="password" value="book_ex"/>
 	</bean>		
 	
+	<!-- HikariCP configuration-->
 	<bean id="dataSource" class="com.zaxxer.hikari.HikariDataSource" destroy-method="close"> 
-    <constructor-arg ref="hikariConfig"></constructor-arg> 
+    		<constructor-arg ref="hikariConfig"></constructor-arg> 
 	</bean>
 	
 	<!-- 내가 추가한거 -->
