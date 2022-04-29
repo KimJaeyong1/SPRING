@@ -10,7 +10,7 @@
 * css 사용
 * HikariCP, mybatis, lombok lib 추가
 
-## 3. basicBoard02 - MVC2 게시판
+## 3. BasicBoard02 - MVC2 게시판
 * 게시판 CRUD 구현
 * 디자인템플릿 Bootstrap 사용
 * HikariCP, mybatis, lombok lib 추가
