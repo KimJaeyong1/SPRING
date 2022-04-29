@@ -3,7 +3,7 @@
 ## 1. BasicSetting - 환경 세팅 완료 프로젝트
 * Java Version 1.8
 * Spring Version 5.0.7.RELEASE
-* HikariCP, mybatis, lombok 등 lib 추가
+* HikariCP, mybatis, lombok lib 추가
 
 ## 2. BasicBoard01 - MVC2 게시판
 * 게시판 CRUD 구현
