@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.spring.shop.gallery.GalleryMapper">
+	<select id="galleryList" resultType="com.spring.shop.dto.GalleryDto" parameterType="com.spring.shop.dto.GallerySearchDto">
+		select
+			gi_no,
+			gi_title,
+			gi_content,
+			gi_writer,
+			TO_CHAR(TO_TIMESTAMP(gi_insertdt , 'YYYYMMDDHH24MISS'), 'YYYY-MM-DD') as "gi_insertdt"
+		from
+			gallery_info
+			<include refid="gallerySearch" />
+		order By
+			gi_no desc
+		limit #{limit} - #{offset} offset #{offset}
+	</select>
+	
+	<select id="getGalleryTotalCnt" resultType="int">
+		select count(*)
+		from gallery_info
+		<include refid="gallerySearch" />
+	</select>
+	
+	<sql id="gallerySearch">
+		<where>
+			<if test="searchType != null or searchType != ''">
+				<choose>
+					<when test="searchType == 'all'">
+						(gi_title || gi_writer) like '%'||#{keyword}||'%'
+					</when>
+					<otherwise>
+						${searchType} like '%'||#{keyword}||'%'
+					</otherwise>
+				</choose>
+			</if>
+		</where>
+	</sql>
+	
+	<select id="detailPage" resultType="com.spring.shop.dto.GalleryDto">
+		select
+			gi_no,
+			gi_title,
+			gi_content,
+			gi_writer,
+			TO_CHAR(TO_TIMESTAMP(gi_insertdt , 'YYYYMMDDHH24MISS'), 'YYYY-MM-DD') as "gi_insertdt"
+		from
+			gallery_info
+		where
+			gi_no = #{gi_no}
+	</select>
+	
+	<insert id="writeAction" parameterType="com.spring.shop.dto.GalleryDto">
+		insert into gallery_info(
+			gi_no,
+			gi_title,
+			gi_content,
+			gi_writer)
+		values(
+			nextval('seq_gi_no'),
+			#{gi_title},
+			#{gi_content},
+			#{gi_writer})
+	</insert>
+	
+	<update id="modifyAction" parameterType="com.spring.shop.dto.GalleryDto">
+		update
+			gallery_info
+		set
+			gi_title = #{gi_title},
+			gi_content = #{gi_content}		
+		where
+			gi_no = #{gi_no}
+	</update>
+</mapper>

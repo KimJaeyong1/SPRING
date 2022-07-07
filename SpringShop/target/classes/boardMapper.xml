@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.spring.shop.board.BoardMapper">
+	<select id="boardList" resultType="com.spring.shop.dto.BoardDto" parameterType="com.spring.shop.dto.SearchDto">
+		select
+			bi_no,
+			bi_title,
+			bi_content,
+			bi_writer,
+			bi_hit,
+			TO_CHAR(TO_TIMESTAMP(bi_insertdt , 'YYYYMMDDHH24MISS'), 'YYYY-MM-DD') as "bi_insertdt"
+		from
+			board_info
+		<include refid="search" />
+		order by
+			bi_no desc
+		limit #{limit} - #{offset} offset #{offset}
+	</select>
+	
+	<select id="getTotalCnt" resultType="int">
+		select count(*)
+		from board_info
+		<include refid="search" />
+	</select>
+	
+	<sql id="search">
+		<where>
+			<if test="searchType != null or searchType != ''">
+				<choose>
+					<when test="searchType == 'all'">
+						(bi_title || bi_writer) like '%'||#{keyword}||'%'
+					</when>
+					<otherwise>
+						${searchType} like '%'||#{keyword}||'%'
+					</otherwise>
+				</choose>
+			</if>
+		</where>
+	</sql>
+	
+	<insert id="write" parameterType="com.spring.shop.dto.BoardDto" useGeneratedKeys="true" keyProperty="bi_no">
+		insert into board_info(
+			bi_no, 
+			bi_title, 
+			bi_content, 
+			bi_writer, 
+			bi_status
+		) values (
+			nextval('seq_bi_no'), 
+			#{bi_title}, 
+			#{bi_content}, 
+			#{bi_writer}, 
+			#{bi_status} 
+		)
+	</insert>
+	
+	<insert id="upload" parameterType="com.spring.shop.dto.AttachDto">
+		insert into board_attach(
+			board_type,
+			board_id,
+			file_num,
+			file_name,
+			saved_file_name,
+			file_size
+		) values (
+			#{board_type}, 
+			#{board_id}, 
+			nextval('seq_file_num'), 
+			#{file_name}, 
+			#{saved_file_name},
+			#{file_size} 
+		)
+	</insert>
+	
+	<select id="getPage" parameterType="int" resultType="com.spring.shop.dto.BoardDto">
+		select 
+			bi_no, 
+			bi_title, 
+			bi_content, 
+			bi_writer 
+		from 
+			board_info 
+		where 
+			bi_no = #{bi_no}
+	</select>
+	
+	<update id="modify" parameterType="com.spring.shop.dto.BoardDto" useGeneratedKeys="true" keyProperty="bi_no">
+		update 
+			board_info 
+		set 
+			bi_title = #{bi_title}, 
+			bi_content = #{bi_content} 
+		where 
+			bi_no = #{bi_no}
+	</update>
+	
+	<delete id="remove" parameterType="com.spring.shop.dto.BoardDto">
+		delete from 
+			board_info 
+		where 
+			bi_no = #{bi_no}
+	</delete>
+	
+	<update id="hit">
+		update 
+			board_info 
+		set 
+			bi_hit = bi_hit + 1 
+		where 
+			bi_no = #{bi_no}
+	</update>
+	
+	<select id="fileInfo" resultType="com.spring.shop.dto.AttachDto">
+		select
+			board_type,
+			board_id,
+			file_num,
+			file_name,
+			saved_file_name,
+			file_size,
+			TO_CHAR(TO_TIMESTAMP(upload_dt , 'YYYYMMDDHH24MISS'), 'YYYY-MM-DD') as "upload_dt",
+			TO_CHAR(TO_TIMESTAMP(insert_dt , 'YYYYMMDDHH24MISS'), 'YYYY-MM-DD') as "insert_dt"
+		from
+			board_attach
+		where
+			board_id = #{bi_no}
+	</select>
+	
+	<insert id="modifyFile" parameterType="com.spring.shop.dto.AttachDto">
+		insert into board_attach(
+			file_name,
+			saved_file_name,
+			file_size)
+		values(
+			#{file_name},
+			#{saved_file_name}, 
+			#{file_size})
+		where
+			board_id = #{board_id}
+	</insert>
+	
+	<delete id="deleteFile" parameterType="int">
+		delete from
+			board_attach
+		where
+		 board_id = #{bi_no}
+	</delete>
+</mapper>
