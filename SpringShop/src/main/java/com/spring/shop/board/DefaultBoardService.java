@@ -136,4 +136,9 @@ public class DefaultBoardService implements BoardService {
 	public AttachDto fileInfo(int bi_no) {
 		return boardRepository.fileInfo(bi_no);
 	}
+	
+	@Override
+	public List<BoardDto> mainBoardList() {
+		return boardRepository.mainBoardList();
+	}
 }

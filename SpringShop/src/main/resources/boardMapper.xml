@@ -2,6 +2,21 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.spring.shop.board.BoardMapper">
+	<select id="mainBoardList" resultType="com.spring.shop.dto.BoardDto" parameterType="com.spring.shop.dto.SearchDto">
+		select
+			bi_no,
+			bi_title,
+			bi_content,
+			bi_writer,
+			bi_hit,
+			TO_CHAR(TO_TIMESTAMP(bi_insertdt , 'YYYYMMDDHH24MISS'), 'YYYY-MM-DD') as "bi_insertdt"
+		from
+			board_info
+		order by
+			bi_no desc
+		limit 20
+	</select>
+	
 	<select id="boardList" resultType="com.spring.shop.dto.BoardDto" parameterType="com.spring.shop.dto.SearchDto">
 		select
 			bi_no,
@@ -124,6 +139,8 @@
 		from
 			board_attach
 		where
+			board_type = 'NOTICE'
+		and
 			board_id = #{bi_no}
 	</select>
 	

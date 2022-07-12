@@ -24,13 +24,21 @@
 				<ul id="pageNav" class="pagination justify-content-center">
 				</ul>
 			</nav>
-			<select name="searchType">
-				<option value="all">전체</option>
-				<option value="bi_title">제목</option>
-				<option value="bi_writer">작성자</option>
-			</select>
-			<input type="text" id="inputSearch" name="inputSearch" placeholder="검색어">
-			<input class="btn btn-primary" id="search" name="search" type="button" value="제목검색">
+			<div class="row justify-content-md-center">
+				<div class="col col-lg-2">
+					<select class="form-select" name="searchType">
+						<option value="all">전체</option>
+						<option value="bi_title">제목</option>
+						<option value="bi_writer">작성자</option>
+					</select>
+				</div>
+				<div class="col-md-auto">
+					<input class="form-control" type="text" id="inputSearch" name="inputSearch" placeholder="검색어">
+				</div>
+				<div class="col col-lg-1">
+					<input class="btn btn-primary" id="search" name="search" type="button" value="검색">
+				</div>
+			</div>
 			<span><a href="/board/write" class="btn btn-primary float-end">글쓰기</a></span>
 		</div>
 	</div>

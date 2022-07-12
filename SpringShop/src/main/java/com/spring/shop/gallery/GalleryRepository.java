@@ -2,6 +2,7 @@ package com.spring.shop.gallery;
 
 import java.util.List;
 
+import com.spring.shop.dto.AttachDto;
 import com.spring.shop.dto.GalleryDto;
 import com.spring.shop.dto.SearchDto;
 
@@ -16,4 +17,14 @@ public interface GalleryRepository {
 	int modifyAction(GalleryDto galleryDto);
 	
 	int getGalleryTotalCnt(SearchDto searchDto);
+
+	int deleteAction(GalleryDto galleryDto);
+
+	int uploadAction(AttachDto attachDto);
+
+	AttachDto detailFile(int gi_no);
+
+	int fileDeleteAction(int gi_no);
+
+	List<GalleryDto> maingalleryList();
 }

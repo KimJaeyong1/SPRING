@@ -7,35 +7,20 @@
 	</div>
 	<nav aria-label="...">
 		<ul class="pagination pagination justify-content-center mt-5" id="pageNav">
-			<li class="page-item disabled">
-				<a class="page-link">Previous</a>
-			</li>
-			<li class="page-item">
-				<a class="page-link" href="#">1</a>
-			</li>
-			<li class="page-item active" aria-current="page">
-				<a class="page-link" href="#">2</a>
-			</li>
-			<li class="page-item">
-				<a class="page-link" href="#">3</a>
-			</li>
-			<li class="page-item">
-				<a class="page-link" href="#">Next</a>
-			</li>
 		</ul>
 	</nav>
-	<div class="row justify-content-center">
-		<div class="col-md-2 mt-3">
+	<div class="row justify-content-md-center">
+		<div class="col col-lg-2">
 			<select class="form-select" name="searchType">
 				<option value="all">전체</option>
 				<option value="gi_title">제목</option>
 				<option value="gi_writer">작성자</option>
 			</select>
 		</div>
-		<div class="col-md-3 mt-3">
+		<div class="col-md-auto">
 			<input class="form-control" type="text" id="searchValue" name="searchValue" placeholder="검색어">
 		</div>
-		<div class="col-md-3 mt-3">
+		<div class="col col-lg-1">
 			<input class="btn btn-primary" type="button" id="searchBtn" name="searchBtn" value="검색">
 		</div>
 		<span><a href="/gallery/writePage" class="btn btn-primary float-end my-4">글쓰기</a></span>
@@ -81,7 +66,8 @@ function getList(selPage) {
 	    		html += '<div class="card-group mt-5 mx-2">';
 	    		html += '<div class="card">';
 	    		html += '<a href="/gallery/detailPage?gi_no='+ list.gi_no +'">';
-	    		html += '<img src="https://mdbcdn.b-cdn.net/img/new/standard/city/041.webp" class="card-img-top"/>';
+	    		// html += '<img src="https://mdbcdn.b-cdn.net/img/new/standard/city/041.webp" class="card-img-top"/>';
+	    		html += '<img src="/resources/file/F_16576000738983740448134289685204.png" class="card-img-top"/>';
 	    		html += '</a>';
 	    		html += '<div class="card-body">';
 	    		html += '<h5 class="card-title">' + list.gi_title + '</h5>';

@@ -8,14 +8,14 @@
 			<input type="text" class="form-control" id="bi_no" name="bi_no" value="<c:out value='${dto.boardDto.bi_no }' />" readonly>
 		</div>
 		<div class="col-4">
-			<label class="form-label">작성자</label> <input type="text" class="form-control" id="bi_writer" name="bi_writer" value="<c:out value='${dto.boardDto.bi_writer }' />" readonly>
+			<label class="form-label">작성자</label> <input type="text" class="form-control" id="bi_writer" name="bi_writer" value="${dto.boardDto.bi_writer }" readonly>
 		</div>
 		<div class="col-7 mt-3">
-			<label class="form-label">제목</label> <input type="text" class="form-control" id="bi_title" name="bi_title" value="<c:out value='${dto.boardDto.bi_title }' />" readonly>
+			<label class="form-label">제목</label> <input type="text" class="form-control" id="bi_title" name="bi_title" value="${dto.boardDto.bi_title }" readonly>
 		</div>
 		<div class="col-7 mt-3">
 			<label class="form-label">내용</label>
-			<textarea class="form-control" id="bi_content" name="bi_content" rows="10" readonly style="resize:none"><c:out value='${dto.boardDto.bi_content }' /></textarea>
+			<textarea class="form-control" id="bi_content" name="bi_content" rows="10" readonly style="resize:none">${dto.boardDto.bi_content }</textarea>
 		</div>
 		<!-- 첨부파일 -->
 		<div class="col-7 mt-3">

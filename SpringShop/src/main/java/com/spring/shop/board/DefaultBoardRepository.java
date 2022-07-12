@@ -70,4 +70,9 @@ public class DefaultBoardRepository implements BoardRepository {
 	public int modifyFile(int board_id) {
 		return sqlSession.getMapper(BoardMapper.class).modifyFile(board_id);
 	}
+
+	@Override
+	public List<BoardDto> mainBoardList() {
+		return sqlSession.getMapper(BoardMapper.class).mainBoardList();
+	}
 }

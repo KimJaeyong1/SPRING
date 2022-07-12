@@ -6,6 +6,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.spring.shop.dto.AttachDto;
 import com.spring.shop.dto.GalleryDto;
 import com.spring.shop.dto.SearchDto;
 
@@ -38,5 +39,30 @@ public class DefaultGalleryRepository implements GalleryRepository {
 	@Override
 	public int getGalleryTotalCnt(SearchDto searchDto) {
 		return sqlSession.getMapper(GalleryMapper.class).getGalleryTotalCnt(searchDto);
+	}
+	
+	@Override
+	public int deleteAction(GalleryDto galleryDto) {
+		return sqlSession.getMapper(GalleryMapper.class).deleteAction(galleryDto);
+	}
+	
+	@Override
+	public int uploadAction(AttachDto attachDto) {
+		return sqlSession.getMapper(GalleryMapper.class).uploadAction(attachDto);
+	}
+	
+	@Override
+	public AttachDto detailFile(int gi_no) {
+		return sqlSession.getMapper(GalleryMapper.class).detailFile(gi_no);
+	}
+	
+	@Override
+	public int fileDeleteAction(int gi_no) {
+		return sqlSession.getMapper(GalleryMapper.class).fileDeleteAction(gi_no);
+	}
+	
+	@Override
+	public List<GalleryDto> maingalleryList() {
+		return sqlSession.getMapper(GalleryMapper.class).maingalleryList();
 	}
 }

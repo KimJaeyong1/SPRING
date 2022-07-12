@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.spring.shop.gallery.GalleryMapper">
-	<select id="galleryList" resultType="com.spring.shop.dto.GalleryDto" parameterType="com.spring.shop.dto.GallerySearchDto">
+	<select id="galleryList" resultType="com.spring.shop.dto.GalleryDto" parameterType="com.spring.shop.dto.SearchDto">
 		select
 			gi_no,
 			gi_title,
@@ -15,6 +15,20 @@
 		order By
 			gi_no desc
 		limit #{limit} - #{offset} offset #{offset}
+	</select>
+	
+	<select id="maingalleryList" resultType="com.spring.shop.dto.GalleryDto" parameterType="com.spring.shop.dto.SearchDto">
+		select
+			gi_no,
+			gi_title,
+			gi_content,
+			gi_writer,
+			TO_CHAR(TO_TIMESTAMP(gi_insertdt , 'YYYYMMDDHH24MISS'), 'YYYY-MM-DD') as "gi_insertdt"
+		from
+			gallery_info
+		order By
+			gi_no desc
+		limit 20
 	</select>
 	
 	<select id="getGalleryTotalCnt" resultType="int">
@@ -51,7 +65,7 @@
 			gi_no = #{gi_no}
 	</select>
 	
-	<insert id="writeAction" parameterType="com.spring.shop.dto.GalleryDto">
+	<insert id="writeAction" parameterType="com.spring.shop.dto.GalleryDto" useGeneratedKeys="true" keyProperty="gi_no">
 		insert into gallery_info(
 			gi_no,
 			gi_title,
@@ -73,4 +87,56 @@
 		where
 			gi_no = #{gi_no}
 	</update>
+	
+	<delete id="deleteAction" parameterType="com.spring.shop.dto.GalleryDto">
+		delete from
+			gallery_info
+		where
+			gi_no = #{gi_no}
+	</delete>
+	
+	<insert id="uploadAction" parameterType="com.spring.shop.dto.AttachDto">
+		insert into board_attach(
+			board_type,
+			board_id,
+			file_num,
+			file_name,
+			saved_file_name,
+			file_size
+		) values (
+			#{board_type}, 
+			#{board_id}, 
+			nextval('seq_file_num'), 
+			#{file_name}, 
+			#{saved_file_name},
+			#{file_size} 
+		)
+	</insert>
+	
+	<select id="detailFile" resultType="com.spring.shop.dto.AttachDto">
+		select
+			board_type,
+			board_id,
+			file_num,
+			file_name,
+			saved_file_name,
+			file_size,
+			TO_CHAR(TO_TIMESTAMP(upload_dt , 'YYYYMMDDHH24MISS'), 'YYYY-MM-DD') as "upload_dt",
+			TO_CHAR(TO_TIMESTAMP(insert_dt , 'YYYYMMDDHH24MISS'), 'YYYY-MM-DD') as "insert_dt"
+		from
+			board_attach
+		where
+			board_type = 'GALLERY'
+		and
+			board_id = #{gi_no}
+	</select>
+	
+	<delete id="fileDeleteAction" parameterType="int">
+		delete from
+			board_attach
+		where
+			board_type = 'GALLERY'
+		and
+			board_id = #{gi_no}
+	</delete>
 </mapper>

@@ -1,6 +1,7 @@
 package com.spring.shop.board;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -23,6 +24,8 @@ public interface BoardService {
 	int remove(BoardDto boardDto);
 
 	void hit(int bi_no);
+
+	List<BoardDto> mainBoardList();
 
 	AttachDto fileInfo(int bi_no);
 }

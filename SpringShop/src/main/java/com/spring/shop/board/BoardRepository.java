@@ -29,4 +29,6 @@ public interface BoardRepository {
 	int deleteFile(int bi_no);
 
 	int modifyFile(int board_id);
+
+	List<BoardDto> mainBoardList();
 }
